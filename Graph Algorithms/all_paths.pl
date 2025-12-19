@@ -1,6 +1,6 @@
 % This code will find all path between two nodes 
 
-% Example usage:                                              
+% Use :                                              
 % ?- all_paths(a, f, Paths).                                         
 % Paths = [[a, b, d, f], [a, c, d, f], [a, c, e, f]]  
 
