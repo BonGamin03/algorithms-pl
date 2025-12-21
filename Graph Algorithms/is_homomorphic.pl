@@ -30,3 +30,24 @@ is_homomorphic :-
     findall((Node1, Node2), (member(Node1, Nodes1), member(Node2, Nodes2)), Pairs),         % Find all possible pairs of nodes.
     permutation(Pairs, Permutation),                                                        % Check permutations of these pairs.
     check_homomorphism(Permutation). 
+
+% The predicate to check if a permutation of node pairs forms a valid homomorphism
+
+check_homomorphism([]).
+check_homomorphism([(X, Y)|Rest]) :-
+    (edge1(X, Z) -> edge2(Y, W), member((Z, W), Rest); true),      % Ensure that edges in the first graph map correctly to edges in the second graph.
+    check_homomorphism(Rest).
+
+
+% The predicate to find all nodes in the first graph
+
+nodes1(Nodes) :-
+    findall(Node, (edge1(Node, _); edge1(_, Node)), NodeList),                              % Collect all nodes from the edges.
+    sort(NodeList, Nodes).                                                                  % Remove duplicates and sort the list of nodes. 
+
+
+% The predicate to find all nodes in the second graph
+
+nodes2(Nodes) :-
+    findall(Node, (edge2(Node, _); edge2(_, Node)), NodeList),                              % Collect all nodes from the edges.
+    sort(NodeList, Nodes).  
