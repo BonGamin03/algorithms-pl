@@ -29,3 +29,15 @@ kruskal([(W, X, Y)|Edges], Acc, MST) :-
 
 forms_cycle(X, Y, Edges) :-
     path(X, Y, Edges).
+
+% The predicate to find a path in the subgraph
+
+path(X, Y, Edges) :-
+    travel(X, Y, [X], Edges).
+
+travel(X, Y, _, Edges) :-
+    member((_, X, Y), Edges).   % Base case: Direct edge exists.
+travel(X, Y, Visited, Edges) :-
+    member((_, X, Z), Edges),   % Recursive case: Move to the next node.
+    \+ member(Z, Visited),
+    travel(Z, Y, [Z|Visited], Edges).
